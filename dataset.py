@@ -52,6 +52,6 @@ class IntelDataset(Dataset):
 
         # if transform not exist than apply this transform to image
         if self.transform is not None:
-            image = self.transform(image)
+            image = self.transform(image=image)
 
         return (image, label)

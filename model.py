@@ -14,7 +14,6 @@ class ResNet(nn.Module):
 
         # change out_features in fc from 1000 to 6
         self.resnet.fc = nn.Linear(in_features=2048, out_features=6, bias=True)
-        print(self.resnet)
 
     def forward(self, x):
         # make prediction
