@@ -9,13 +9,12 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
 import torch.optim as optim
 from utils import calculate_accuracy
-import mlflow
 
 SAVED_MODEL_PATH = './models'
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-NUM_EPOCHS = 100
+NUM_EPOCHS = 10000
 LEARNING_RATE = 0.1
-BATCH_SIZE = 128
+BATCH_SIZE = 1024
 ROOT_DIR_TRAIN = './data/seg_train'
 ROOT_DIR_TEST = './data/seg_test'
 LOAD_MODEL = False
@@ -82,14 +81,6 @@ def test_fn(model, criterion, test_loader, losses, accuracies):
             accuracies.append(accuracy)
 
 def main():
-    # Start MLflow run
-    mlflow.start_run()
-
-    # Log parameters to the run
-    mlflow.log_param("NUM_EPOCHS", NUM_EPOCHS)
-    mlflow.log_param("LEARNING_RATE", LEARNING_RATE)
-    mlflow.log_param("BATCH_SIZE", BATCH_SIZE)
-
     # if directory model exists than create this
     if not os.path.exists(SAVED_MODEL_PATH):
         os.makedirs(SAVED_MODEL_PATH)
@@ -139,7 +130,7 @@ def main():
     scaler = torch.cuda.amp.GradScaler()
 
     # define Learning Rate Scheduler
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=5, verbose=True)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
 
     for epoch in range(NUM_EPOCHS):
         print(f'Epoch: {epoch}')
@@ -181,19 +172,8 @@ def main():
         # save model
         torch.save(model.state_dict(), SAVED_MODEL_PATH + f'/model{epoch}.pth')
 
-        # Log metrics to MLflow
-        mlflow.log_metric("mean_loss_train", mean_loss_train, step=epoch)
-        mlflow.log_metric("mean_accuracy_train", mean_accuracy_train, step=epoch)
-        mlflow.log_metric("mean_loss_val", mean_loss_val, step=epoch)
-        mlflow.log_metric("mean_accuracy_val", mean_accuracy_val, step=epoch)
-        mlflow.log_metric("mean_loss_test", mean_loss_test, step=epoch)
-        mlflow.log_metric("mean_accuracy_test", mean_accuracy_test, step=epoch)
-
         # update scheduler
         scheduler.step(mean_loss_train)
-
-    # End MLflow run
-    mlflow.end_run()
 
 if __name__ == '__main__':
     main()

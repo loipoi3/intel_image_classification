@@ -1,16 +1,28 @@
-from torchvision.models import resnet152
+from torchvision.models import resnet50
 import torch.nn as nn
 
 class ResNet(nn.Module):
     def __init__(self):
         super(ResNet, self).__init__()
 
-        # download pretrained resnet152
-        self.resnet = resnet152(pretrained=True)
+        # download pretrained resnet50
+        self.resnet = resnet50(weights='ResNet50_Weights.DEFAULT')
 
         # freeze all layers
         for param in self.resnet.parameters():
             param.requires_grad = False
+
+        # find index for layer4
+        layer4_index = None
+        for i, module in enumerate(self.resnet.modules()):
+            if module == self.resnet.layer4:
+                layer4_index = i
+                break
+
+        # unfreeze all layers started from layer4
+        for module in list(self.resnet.modules())[layer4_index:]:
+            for param in module.parameters():
+                param.requires_grad = True
 
         # change out_features in fc from 1000 to 6
         self.resnet.fc = nn.Linear(in_features=2048, out_features=6, bias=True)
