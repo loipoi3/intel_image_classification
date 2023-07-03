@@ -27,7 +27,7 @@ def classify_image(image_bytes):
     with torch.no_grad():
         outputs = model(image)
         _, predicted = torch.max(outputs, 1)
-        class_labels = ['buildings', 'glacier', 'forest', 'mountain', 'sea', 'street']
+        class_labels = ['buildings', 'forest', 'glacier', 'mountain', 'sea', 'street']
         prediction = class_labels[predicted.item()]
 
     return prediction

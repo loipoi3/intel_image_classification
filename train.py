@@ -14,7 +14,7 @@ SAVED_MODEL_PATH = './models'
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 NUM_EPOCHS = 10000
 LEARNING_RATE = 0.001
-BATCH_SIZE = 2048
+BATCH_SIZE = 1024
 ROOT_DIR_TRAIN = './data/seg_train'
 ROOT_DIR_TEST = './data/seg_test'
 LOAD_MODEL = False
@@ -135,7 +135,7 @@ def main():
     #scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
 
     for epoch in range(NUM_EPOCHS):
-        print(f'Epoch: {epoch}')
+        print(f'Epoch: {epoch + 1}')
 
         # define losses for scheduler and accuracies
         losses_train = []
@@ -172,7 +172,7 @@ def main():
         print(f"Testing Loss: {mean_loss_test} | Testing Accuracy: {mean_accuracy_test}")
 
         # save model
-        torch.save(model.state_dict(), SAVED_MODEL_PATH + f'/model{epoch}.pth')
+        torch.save(model.state_dict(), SAVED_MODEL_PATH + f'/model{epoch + 1}.pth')
 
         # update scheduler
         #scheduler.step(mean_loss_train)
