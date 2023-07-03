@@ -13,8 +13,8 @@ from utils import calculate_accuracy
 SAVED_MODEL_PATH = './models'
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 NUM_EPOCHS = 10000
-LEARNING_RATE = 0.1
-BATCH_SIZE = 1024
+LEARNING_RATE = 0.001
+BATCH_SIZE = 2048
 ROOT_DIR_TRAIN = './data/seg_train'
 ROOT_DIR_TEST = './data/seg_test'
 LOAD_MODEL = False
@@ -86,8 +86,10 @@ def main():
         os.makedirs(SAVED_MODEL_PATH)
 
     # define data transformations
-    transform_train = A.Compose([A.Resize(64, 64), A.ToRGB(), A.HorizontalFlip(p=0.5), A.RandomRotate90(p=0.5), A.Blur(p=0.3),
-                           ToTensorV2()])
+    transform_train = A.Compose([A.Resize(64, 64), A.ToFloat(max_value=1.0), A.ToRGB(), A.HorizontalFlip(p=0.5),
+                                 A.RandomRotate90(p=0.5), A.Blur(p=0.3), A.RandomBrightnessContrast(p=0.2),
+                                 A.RandomResizedCrop(64, 64, scale=(0.8, 1.0), ratio=(0.9, 1.1)),
+                                 A.GaussNoise(var_limit=(0.0, 0.1)), ToTensorV2()])
     transform_val_test = A.Compose([A.Resize(64, 64), ToTensorV2()])
 
     # define model and move it to device(gpu or cpu)
@@ -130,7 +132,7 @@ def main():
     scaler = torch.cuda.amp.GradScaler()
 
     # define Learning Rate Scheduler
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
+    #scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
 
     for epoch in range(NUM_EPOCHS):
         print(f'Epoch: {epoch}')
@@ -173,7 +175,7 @@ def main():
         torch.save(model.state_dict(), SAVED_MODEL_PATH + f'/model{epoch}.pth')
 
         # update scheduler
-        scheduler.step(mean_loss_train)
+        #scheduler.step(mean_loss_train)
 
 if __name__ == '__main__':
     main()
