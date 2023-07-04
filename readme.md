@@ -62,13 +62,9 @@ pip install -r requirements.txt
 ```
 6. After installing all the libraries, type the following command and press Enter:
  ```bash
-python ui.py
+streamlit run ui.py
 ```
-7. After that, follow the link that appeared on the command line.
-### Example:
-![Alt text](example1.png)
-![Alt text](example2.png)
-8. After that you can insert pictures by clicking on the Choose File button and selecting them on your computer and see what class the model classifies them by pressing the Classify button.
+7. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
 ## Author
 This Intel Image Classification project was developed by Dmytro Khar. If you have any questions or need further assistance, please contact qwedsazxc8250@gmail.com.
