@@ -23,6 +23,7 @@ def preprocess_image(image):
 def classify_image(image_bytes):
     image = Image.open(BytesIO(image_bytes))
     image = preprocess_image(image)
+    image = image / 255.0
 
     with torch.no_grad():
         outputs = model(image)

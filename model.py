@@ -1,12 +1,12 @@
-from torchvision.models import resnet18
+from torchvision.models import resnet34
 import torch.nn as nn
 
 class ResNet(nn.Module):
     def __init__(self):
         super(ResNet, self).__init__()
 
-        # download pretrained resnet50
-        self.resnet = resnet18(weights='ResNet18_Weights.DEFAULT')
+        # download pretrained resnet34
+        self.resnet = resnet34(weights='ResNet34_Weights.DEFAULT')
 
         # freeze all layers
         #for param in self.resnet.parameters():
@@ -32,5 +32,3 @@ class ResNet(nn.Module):
         pred = self.resnet(x)
 
         return pred
-
-model = ResNet()
