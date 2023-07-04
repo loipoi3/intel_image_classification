@@ -34,7 +34,7 @@ docker build -t intel_img_classification .
 3. Next run this command docker run -p 8501:8501 image_name
 ### Example:
 ```bash
-docker run -p 8501:8501
+docker run -p 8501:8501 intel_img_classification
 ```
 4. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
