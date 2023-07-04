@@ -6,6 +6,6 @@ COPY ui.py inference.py model.pth model.py requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8000
+EXPOSE 8501
 
-CMD ["python", "ui.py"]
+CMD ["streamlit", "run", "ui.py", "--server.port", "8501"]
