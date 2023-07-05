@@ -26,17 +26,8 @@ After training, the model achieved a accuracy of 0.9 on the validation set. Base
 To use the trained model for Intel Image Classification, follow the instructions below:
 ## Way 1
 1. First go to the project folder using cmd.
-2. Next run this command docker build -t image_name .
-### Example:
-```bash
-docker build -t intel_img_classification .
-```
-3. Next run this command docker run -p 8501:8501 image_name
-### Example:
-```bash
-docker run -p 8501:8501 intel_img_classification
-```
-4. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
+2. Next run this command docker-compose up --build
+3. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
 ## Way 2
 1. First go to the project folder using cmd.
