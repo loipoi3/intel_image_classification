@@ -1,17 +1,19 @@
 import torch
-import streamlit as st
 from PIL import Image
 import albumentations as A
 from model import ResNet
 from albumentations.pytorch import ToTensorV2
 import numpy as np
+from flask import Flask, jsonify, request
 
+app = Flask(__name__)
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 model = ResNet()
 model.load_state_dict(torch.load('model.pth', map_location=device))
 model.eval()
+
 
 def predict(image):
     image_tensor = preprocess_image(image)
@@ -22,6 +24,7 @@ def predict(image):
         prediction = class_labels[predicted.item()]
         return prediction
 
+
 def preprocess_image(image):
     image = np.array(image)
     transform = A.Compose([A.Resize(64, 64), ToTensorV2()])
@@ -30,16 +33,17 @@ def preprocess_image(image):
     image = image / 255.0
     return image
 
-def main():
-    st.title("Image Classification")
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded Image.', use_column_width=True)
-        label = predict(image)
-        st.write(f"Class: {label}")
+@app.route('/predict', methods=['POST'])
+def handle_prediction():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file found'})
+
+    file = request.files['file']
+    image = Image.open(file.stream)
+    label = predict(image)
+    return jsonify({'class': label})
 
 
 if __name__ == '__main__':
-    main()
+    app.run(host='0.0.0.0', port=5000)

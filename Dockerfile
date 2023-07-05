@@ -1,11 +1,11 @@
-FROM python:3.11.3-slim
+FROM python:3.11.3
 
 WORKDIR /app
 
-COPY ui.py inference.py model.pth model.py requirements.txt ./
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8501
+COPY . .
 
-CMD ["streamlit", "run", "ui.py", "--server.port", "8501"]
+CMD ["python", "ui.py"]
