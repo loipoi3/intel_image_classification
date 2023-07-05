@@ -50,6 +50,10 @@ virtualenv intel
 ```bash
 name_of_the_new_env\Scripts\activate
 ```
+### Example:
+```bash
+intel\Scripts\activate
+```
 5. Write the following command and press Enter:
  ```bash
 pip install -r requirements.txt
@@ -58,11 +62,20 @@ pip install -r requirements.txt
   ```bash
 python inference.py
 ```
-7. Next run this command:
+7. Then open another terminal and go to the project directory.
+8. Next activate the environment, write the following command and press Enter:
+```bash
+name_of_the_new_env\Scripts\activate
+```
+### Example:
+```bash
+intel\Scripts\activate
+```
+9. Next run this command:
  ```bash
 streamlit run ui.py
 ```
-8. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
+10. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
 ## Author
 This Intel Image Classification project was developed by Dmytro Khar. If you have any questions or need further assistance, please contact qwedsazxc8250@gmail.com.
