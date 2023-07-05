@@ -24,7 +24,7 @@ After training, the model achieved a accuracy of 0.9 on the validation set. Base
 
 ## Usage
 To use the trained model for Intel Image Classification, follow the instructions below:
-## Way 1
+
 1. First go to the project folder using cmd.
 2. Next run this command:
 ```bash
