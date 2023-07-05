@@ -55,10 +55,14 @@ name_of_the_new_env\Scripts\activate
 pip install -r requirements.txt
 ```
 6. After installing all the libraries, type the following command and press Enter:
+  ```bash
+python inference.py
+```
+7. Next run this command:
  ```bash
 streamlit run ui.py
 ```
-7. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
+8. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
 ## Author
 This Intel Image Classification project was developed by Dmytro Khar. If you have any questions or need further assistance, please contact qwedsazxc8250@gmail.com.
