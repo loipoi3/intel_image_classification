@@ -32,50 +32,5 @@ docker-compose up --build
 ```
 3. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
 
-## Way 2
-1. First go to the project folder using cmd.
-2. Next install virtualenv, write the following command and press Enter:
-```bash
-pip install virtualenv
-```
-3. Next create a new environment, write the following command and press Enter:
-```bash
-virtualenv name_of_the_new_env
-```
-### Example:
-```bash
-virtualenv intel
-```
-4. Next activate the new environment, write the following command and press Enter:
-```bash
-name_of_the_new_env\Scripts\activate
-```
-### Example:
-```bash
-intel\Scripts\activate
-```
-5. Write the following command and press Enter:
- ```bash
-pip install -r requirements.txt
-```
-6. After installing all the libraries, type the following command and press Enter:
-  ```bash
-python inference.py
-```
-7. Then open another terminal and go to the project directory.
-8. Next activate the environment, write the following command and press Enter:
-```bash
-name_of_the_new_env\Scripts\activate
-```
-### Example:
-```bash
-intel\Scripts\activate
-```
-9. Next run this command:
- ```bash
-streamlit run ui.py
-```
-10. And the last thing, open this link in your browser http://localhost:8501, that's all, now you can use the classifier
-
 ## Author
 This Intel Image Classification project was developed by Dmytro Khar. If you have any questions or need further assistance, please contact qwedsazxc8250@gmail.com.
